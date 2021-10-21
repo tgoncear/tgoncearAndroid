@@ -29,7 +29,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        windowManager.defaultDisplay.getMetrics(displayMetrics)
         initCountDown();
         buttonTocam = findViewById(R.id.buttonTocam);
         nmTocam = findViewById(R.id.nmTocat);
@@ -39,6 +38,8 @@ class MainActivity : AppCompatActivity() {
             if(!started){
                 startGame();
             }
+
+            run();
             incrementar()
 
         }
@@ -48,7 +49,7 @@ class MainActivity : AppCompatActivity() {
     private fun startGame() {
         timer.start();
         started=true;
-        run();
+
     }
 
     private fun initCountDown() {
@@ -85,23 +86,40 @@ class MainActivity : AppCompatActivity() {
     private fun resetGame(){
         counter = 0;
         started = false;
-
+        var dx = getWidthScreen(this) / 2;
+        var dy = getHeightScreen(this) / 2;
+        buttonTocam.animate()
+            .x(dx.toFloat())
+            .y(dy.toFloat())
+            .setDuration(0)
+            .start()
     }
     private fun stawnRandomButton(){
 
     }
-    private fun getWidthScreen(activity: Activity): Int{
+    //Aquest metode per ara no es del tot funcional ja que la idea es que la agafi la mesura de la pantalla
+    //pero es veu que no vol funcionar correctament
+    private fun getWidthScreen(activity: MainActivity): Int{
         activity.windowManager.defaultDisplay.getMetrics(displayMetrics);
-        return displayMetrics.widthPixels;
+        println("El width de la pantalla es: " + displayMetrics.widthPixels);
+        return 1000;
     }
-    private fun getHeightScreen(activity: Activity): Int{
+    private fun getHeightScreen(activity: MainActivity): Int{
         activity.windowManager.defaultDisplay.getMetrics(displayMetrics);
-        return displayMetrics.heightPixels;
+        println("El height de la pantalla es: " + displayMetrics.heightPixels);
+        return 2000;
     }
     private fun run(){
-        Random random = new Random();
+        val random = Random();
+        val dx = random.nextFloat() * getWidthScreen(this);
+        val dy = random.nextFloat() * getHeightScreen(this);
         buttonTocam.animate()
-            .x()
+            .x(dx)
+            .y(dy)
+            .setDuration(0)
+            .start();
+        println(dx);
+        println(dy);
     }
 }
 
