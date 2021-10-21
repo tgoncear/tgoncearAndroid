@@ -20,9 +20,11 @@ class MainActivity : AppCompatActivity() {
     internal var temps = 60
     internal var started = false
     internal lateinit var timer : CountDownTimer
+    internal lateinit var timerMovimentBotto : CountDownTimer
     internal val countDown : Long = 10000
     internal val intervalCountDown : Long = 1000
     val displayMetrics = DisplayMetrics();
+    var time = 0;
 
 
 
@@ -39,7 +41,6 @@ class MainActivity : AppCompatActivity() {
                 startGame();
             }
 
-            run();
             incrementar()
 
         }
@@ -57,14 +58,17 @@ class MainActivity : AppCompatActivity() {
             override fun onTick(timeleft: Long) {
                 var tempsRestant = timeleft / intervalCountDown;
                 tempsDisponible.text = tempsRestant.toString();
+                time = tempsRestant.toInt();
+                run();
             }
 
             override fun onFinish() {
                 endGame();
                 resetGame();
             }
-
         }
+
+
     }
 
     //Metode per a poder incrementar el contador
