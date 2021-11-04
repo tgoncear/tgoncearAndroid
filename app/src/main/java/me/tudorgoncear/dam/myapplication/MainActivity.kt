@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.DisplayMetrics
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -21,7 +22,7 @@ class MainActivity : AppCompatActivity() {
     internal var started = false
     internal lateinit var timer : CountDownTimer
     internal lateinit var timerMovimentBotto : CountDownTimer
-    internal val countDown : Long = 10000
+    internal val countDown : Long = 60000
     internal val intervalCountDown : Long = 1000
     val displayMetrics = DisplayMetrics();
     var time = 0;
@@ -36,11 +37,13 @@ class MainActivity : AppCompatActivity() {
         nmTocam = findViewById(R.id.nmTocat);
         tempsDisponible = findViewById(R.id.tempsDisponible);
 
-        buttonTocam.setOnClickListener{
+        buttonTocam.setOnClickListener{ view ->
+            val bounceAnimation = AnimationUtils.loadAnimation(this,R.anim.bounce)
+            view.startAnimation(bounceAnimation);
             if(!started){
                 startGame();
             }
-
+            run();
             incrementar()
 
         }
